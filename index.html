@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七小皇叔的小书房 - 故事很长，我们慢慢读</title>
+    <style>
+        /* 全局样式 - 温柔治愈风 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+
+        body {
+            background-color: #f9f7f4;
+            color: #5a4f41;
+            line-height: 1.6;
+        }
+
+        a {
+            color: #8a7d6d;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #b08968;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: #fff9f2;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #b08968;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+        }
+
+        /* 移动端菜单按钮 */
+        .menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* 内容容器 */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+        }
+
+        /* 首页banner */
+        .banner {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+        }
+
+        .banner h1 {
+            font-size: 2rem;
+            color: #8a7d6d;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .banner p {
+            color: #9d9486;
+            font-size: 1rem;
+        }
+
+        /* 板块通用样式 */
+        .section {
+            margin: 3rem 0;
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #b08968;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #f0e9e0;
+        }
+
+        /* 系列标题 */
+        .series-title {
+            font-size: 1.1rem;
+            color: #9c7858;
+            margin: 2rem 0 1rem;
+            font-weight: 500;
+        }
+
+        /* 小书架 - 作品展示 */
+        .book-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .book-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: #f9f7f4;
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-cover {
+            width: 120px;
+            height: 180px;
+            margin: 0 auto 1rem;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-name {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-desc {
+            font-size: 0.85rem;
+            color: #9d9486;
+        }
+        book-actions {
+            margin-top: 0.5rem; /* 按钮区和简介的间距 */
+        }
+
+        /* .book-btn {
+            display: block; /* 设为块级元素，自动占满一行，实现上下排列 */
+            width: fit-content; /* 按钮宽度适配文字 */
+            margin: 0 auto 0.4rem auto; /* 水平居中 + 按钮间的上下间距 */
+            padding: 0.3rem 0.8rem;
+            background-color: #f0e9e0;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+
+        /* 给最后一个按钮去掉底部间距，避免多余空白 */
+        .book-btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .book-btn:hover {
+            background-color: #e8e2d9;
+            color: #b08968;
+        }
+         */
+
+         /* 番外列表样式 */
+        .extra-item {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .extra-link {
+            color: #b08968; /* 和整体风格统一的暖棕色 */
+            margin-left: 0.5rem;
+        }
+
+        .extra-link:hover {
+            color: #9c7858;
+            text-decoration: underline; /* 鼠标悬停加下划线，提示可点击 */
+        }
+
+        .extra-more {
+            color: #8a7d6d;
+            font-size: 0.9rem;
+        }
+
+        .extra-more:hover {
+            color: #b08968;
+        }
+
+        /* 画廊网格布局 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-item {
+            text-align: center;
+            background-color: #f9f7f4;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover; /* 保持图片比例，不拉伸 */
+            border-radius: 5px;
+            cursor: pointer; /* 提示可点击 */
+            transition: transform 0.3s;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.02); /* 鼠标悬停轻微放大，增加互动感 */
+        }
+
+        .gallery-desc {
+            font-size: 0.8rem;
+            color: #9d9486;
+            margin-top: 0.5rem;
+        }
+
+
+        /* 留言墙 */
+        .message-list {
+            margin-bottom: 2rem;
+        }
+
+        .message-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #f9f7f4;
+            border-radius: 8px;
+        }
+
+        .message-author {
+            font-size: 0.9rem;
+            color: #b08968;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-content {
+            font-size: 0.95rem;
+        }
+
+        .message-form textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e8e2d9;
+            border-radius: 8px;
+            background-color: #f9f7f4;
+            resize: none;
+            margin-bottom: 1rem;
+            color: #5a4f41;
+        }
+
+        .message-form button {
+            padding: 0.6rem 2rem;
+            background-color: #b08968;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .message-form button:hover {
+            background-color: #9c7858;
+        }
+
+
+                /* 小星星板块样式 */
+        .stars-item {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .stars-link {
+            color: #b08968; /* 和网站主色调统一的暖棕色 */
+            margin-left: 0.5rem;
+        }
+
+        .stars-link:hover {
+            color: #9c7858;
+            text-decoration: underline; /* 悬停加下划线，提示可点击 */
+        }
+
+        .stars-more {
+            color: #8a7d6d;
+            font-size: 0.9rem;
+        }
+
+        .stars-more:hover {
+            color: #b08968;
+        }
+
+
+        /* 页脚 */
+        footer {
+            background-color: #fff9f2;
+            padding: 2rem 5%;
+            text-align: center;
+            margin-top: 3rem;
+            color: #9d9486;
+        }
+
+        .footer-text {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #fff9f2;
+                padding: 1rem 5%;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .book-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">七小皇叔读者小世界</div>
+            <div class="menu-btn" id="menuBtn">☰</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#home">首页</a>
+                <a href="#books">小书架</a>
+                <a href="#theater">小剧场</a>
+                <a href="#sounds">声音集</a>
+                <a href="#gallery">小画廊</a>
+                <a href="#about">关于她</a>
+                <!-- <a href="#messages">留言墙</a> -->
+                <a href="#stars">小星星</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <div class="container" id="home">
+        <!-- 首页banner -->
+        <div class="banner">
+            <h1>这里是属于七小皇叔读者的小世界</h1>
+            <p>故事很长，我们慢慢读 · 谢谢你，喜欢她写的故事</p>
+        </div>
+
+        <!-- 小书架 -->
+        <section class="section" id="books">
+            <h2 class="section-title">小书架 · 她写过的所有故事</h2>
+            
+            <!-- 神龛宇宙系列 -->
+            <h3 class="series-title">✨ 神龛宇宙系列</h3>
+            <div class="book-list">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0c70ca22a4af4a77678f36b01c18df0f97.jpg" alt="神龛封面">
+                    </div>
+                    <div class="book-name">《神龛》</div>
+                    <div class="book-desc">都市/情感/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-1707945.html">正版阅读 →</a>
+                </div>
+            </div>
+
+            <!-- 飘飘宇宙系列 -->
+            <h3 class="series-title">✨ 飘飘宇宙系列</h3>
+            <div class="book-list">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0cb562995c53b7293b854de63c6917c083.jpg" alt="飘飘封面">
+                    </div>
+                    <div class="book-name">《飘飘》</div>
+                    <div class="book-desc">都市/情感/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-1631766.html">正版阅读 →</a>
+                </div>
+            </div>
+
+            <!-- 问棺宇宙系列 -->
+            <h3 class="series-title">✨ 问棺宇宙系列</h3>
+            <div class="book-list">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/1152167ce977cdda335c4360d45ccf7bf71cd557.jpg" alt="问棺封面">
+                    </div>
+                    <div class="book-name">《问棺》</div>
+                    <div class="book-desc">奇幻/悬疑/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-116409.html">正版阅读 →</a>
+                    <br> <!-- 新增换行标签 -->
+                    <a href="https://www.taobao.com/list/item/b0NGQlJRb0hiS3RDSzlMT29aR0RuUT09.htm" style="margin-top: 0.5rem;">购买实体书 →</a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0ca0bcf3f6fa3ba0d507054eb4c029e7b3.jpg" alt="船娘封面">
+                    </div>
+                    <div class="book-name">《船娘》</div>
+                    <div class="book-desc">民国/情感/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-608520.html">正版阅读 →</a>
+                </div>
+            </div>
+
+            <!-- 拍拍宇宙系列 -->
+            <h3 class="series-title">✨ 拍拍宇宙系列</h3>
+            <div class="book-list">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0c2d99d3db49f6b7f10667bd40bb4d02cc.jpg" alt="帮我拍拍封面">
+                    </div>
+                    <div class="book-name">《帮我拍拍》</div>
+                    <div class="book-desc">都市/情感/百合 · 已完结</div>
+                        <a href="长佩文学帮我拍拍链接" class="book-btn">正版阅读 →</a>
+                        <br> <!-- 新增换行标签 -->
+                        <a href="https://www.taobao.com/list/item/VWVGZnRrV1FMTFVxcEVJSkNWK093UT09.htm" style="margin-top: 0.5rem;">购买实体书 →</a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0c6ed5f95eacf7fa5d1b787716e6cfea78.jpg" alt="晚潮封面">
+                    </div>
+                    <div class="book-name">《晚潮》</div>
+                    <div class="book-desc">穿越/都市/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-974178.html">正版阅读 →</a>
+                    <br> <!-- 新增换行标签 -->
+                    <a href="https://www.taobao.com/list/item/TWYzWlFWd21RSVlvU0diNW4rWHZTZz09.htm?spm=a21wu.10013406.taglist-content.11.c0dd1064HuIAfU" style="margin-top: 0.5rem;">购买实体书 →</a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0cdd61d468535c6411243dedaec492ecb4.jpg" alt="都什么年代了啊封面">
+                    </div>
+                    <div class="book-name">《都什么年代了啊》</div>
+                    <div class="book-desc">都市/情感/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-1064483.html">正版阅读 →</a>
+                    <br> <!-- 新增换行标签 -->
+                    <a href="https://detail.tmall.com/item.htm?abbucket=5&id=911280794172&mi_id=0000giX2mspUeNWRjplUsz8uXUqiGlLdjam_OhF2SUIcfxw&ns=1&skuId=5942396607222&spm=a21n57.1.hoverItem.3&utparam=%7B%22aplus_abtest%22%3A%22a3f12b87278b08efd161547fec6b7b6b%22%7D&xxc=taobaoSearch" style="margin-top: 0.5rem;">购买实体书 →</a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images/0cb4728b5727048e7020657b85c2212f8a.jpg" alt="希望你真的很快乐封面">
+                    </div>
+                    <div class="book-name">《希望你，真的很快乐》</div>
+                    <div class="book-desc">都市/情感/百合 · 已完结</div>
+                    <a href="https://www.gongzicp.com/novel-1530782.html">正版阅读 →</a>
+                    <br> <!-- 新增换行标签 -->
+                    <a href="https://www.taobao.com/list/item/UjVNV2dsaEpKOEt2Z0d1SXZGanRkQT09.htm" style="margin-top: 0.5rem;">购买实体书 →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 小剧场 -->
+        <section class="section" id="theater">
+            <h2 class="section-title">小剧场 · 只在这里放的温柔</h2>
+            <p>这里是专属的番外小角落，都是甜甜的小故事～</p>
+            <br>
+            <!-- 番外列表，新增多个条目 + 链接 -->
+            <div class="extra-list">
+                <div class="extra-item">
+                    <span>📖 《问棺》番外：</span>
+                    <a href="https://weibo.com/6481004799/4801735794888012" class="extra-link">一九《禁止通行》</a>
+                </div>
+                <div class="extra-item" style="margin-top: 0.8rem;">
+                    <span>📖 《问棺》番外：</span>
+                    <a href="https://weibo.com/6481004799/4831813996649631" class="extra-link">罗音《茭白》</a>
+                </div>
+                <div class="extra-item" style="margin-top: 0.8rem;">
+                    <span>📖 《问棺》番外：</span>
+                    <a href="https://weibo.com/6481004799/5035332282093745" class="extra-link">息风拂昼伞番外《诸神黄昏》</a>
+                </div>
+                <!-- <div class="extra-item" style="margin-top: 0.8rem;">
+                    <span>📖 《晚潮》番外：</span>
+                    <a href="晚潮番外链接" class="extra-link">向挽与晁新的海边约定</a>
+                </div>
+                <div class="extra-item" style="margin-top: 0.8rem;">
+                    <span>📖 《神龛》番外：</span>
+                    <a href="神龛番外链接" class="extra-link">都市里的温柔瞬间</a>
+                </div> -->
+            </div>
+            <!-- 可选：新增「更多番外」汇总链接 -->
+            <!-- <div style="margin-top: 1.5rem;">
+                <a href="所有番外汇总链接" class="extra-more">查看全部番外 →</a>
+            </div> -->
+        </section>
+
+        <!-- 声音集 -->
+        <section class="section" id="sounds">
+            <h2 class="section-title">声音集 · 她故事里的声音</h2>
+            <div class="book-list">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_audio/4608d15bgy1i7pex1bze5j20tx13vtfg.jpg" alt="神龛广播剧封面">
+                    </div>
+                    <div class="book-name">《神龛》广播剧</div>
+                    <div class="book-desc">全二季 · 已完结</div>
+                    <!-- 替换原收听按钮为APP收听说明 -->
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #9c7858; line-height: 1.5;">
+                        🎧 仅支持在「饭角APP」收听<br>
+                        打开APP搜索剧名即可
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_audio/008vzfixly1hdzdgdve3xj30u013ytq4.jpg" alt="问棺有声书封面">
+                    </div>
+                    <div class="book-name">《问棺》广播剧</div>
+                    <div class="book-desc">全三季 · 已完结</div>
+                    <!-- 替换原收听按钮为APP收听说明 -->
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #9c7858; line-height: 1.5;">
+                        🎧 仅支持在「饭角APP」收听<br>
+                        打开APP搜索剧名即可
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_audio/4608d15bgy1hi40neb7hcj20u013ytix.jpg" alt="帮我拍拍有声书封面">
+                    </div>
+                    <div class="book-name">《帮我拍拍》广播剧</div>
+                    <div class="book-desc">全二季 · 已完结</div>
+                    <!-- 替换原收听按钮为APP收听说明 -->
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #9c7858; line-height: 1.5;">
+                        🎧 仅支持在「饭角APP」收听<br>
+                        打开APP搜索剧名即可
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_audio/4608d15bgy1hy62fe6budj20u013yx6p.jpg" alt="晚潮有声书封面">
+                    </div>
+                    <div class="book-name">《晚潮》广播剧</div>
+                    <div class="book-desc">全一季 · 已完结</div>
+                    <!-- 替换原收听按钮为APP收听说明 -->
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #9c7858; line-height: 1.5;">
+                        🎧 仅支持在「饭角APP」收听<br>
+                        打开APP搜索剧名即可
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_audio/008vzfixly1hinzi5x9a1j31ql2bcqv7.jpg" alt="都什么年代了啊有声书封面">
+                    </div>
+                    <div class="book-name">《都什么年代了啊》广播剧</div>
+                    <div class="book-desc">全一季 · 已完结</div>
+                    <!-- 替换原收听按钮为APP收听说明 -->
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #9c7858; line-height: 1.5;">
+                        🎧 仅支持在「饭角APP」收听<br>
+                        打开APP搜索剧名即可
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_audio/4608d15bgy1ia4h1vt9wwj20u013yqi0.jpg" alt="希望你，真的很快乐有声书封面">
+                    </div>
+                    <div class="book-name">《希望你，真的很快乐》广播剧</div>
+                    <div class="book-desc">全一季 · 已完结</div>
+                    <!-- 替换原收听按钮为APP收听说明 -->
+                    <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #9c7858; line-height: 1.5;">
+                        🎧 仅支持在「饭角APP」收听<br>
+                        打开APP搜索剧名即可
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 小画廊 -->
+        <!-- <section class="section" id="gallery">
+            <h2 class="section-title">小画廊 · 干净的美图区</h2> -->
+            <!-- <p>所有图片均为官方/授权同人图，禁二改、禁商用</p> -->
+            <!-- <br>
+            <div class="book-list">
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_gallery/20260217201715_94_138.jpg" alt="问棺官方封面">
+                    </div>
+                    <div class="book-name">苏唱</div>
+                    <a href="#">保存高清图 →</a>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="李十一宋十九同人图链接" alt="李十一×宋十九同人图">
+                    </div>
+                    <div class="book-name">李十一×宋十九</div>
+                    <a href="#">保存高清图 →</a>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- 小画廊 -->
+        <section class="section" id="gallery">
+            <h2 class="section-title">小画廊 · 干净的美图区</h2>
+            <!-- <p>所有图片均为官方/授权同人图，禁二改、禁商用</p> -->
+            <br>
+
+            <!-- 人物分组1：苏唱（帮我拍拍） -->
+            <h3 style="font-size: 1.1rem; color: #9c7858; margin: 2rem 0 1rem; font-weight: 500;">✨ 苏唱（帮我拍拍）</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_gallery/20260217201715_94_138.jpg" alt="苏唱-官方人设图">
+                    <!-- <p class="gallery-desc">官方人设图</p> -->
+                    <p class="gallery-desc"></p>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_gallery/20260217201717_95_138.jpg" alt="苏唱-同人插画">
+                    <p class="gallery-desc"></p>
+                    <!-- <p class="gallery-desc">同人插画·日常</p> -->
+                </div>
+                <!-- <div class="gallery-item">
+                    <img src="李十一图片3链接" alt="李十一-场景图">
+                    <p class="gallery-desc">问棺名场面还原</p>
+                </div>
+                <div class="gallery-item">
+                    <img src="李十一图片4链接" alt="李十一-壁纸">
+                    <p class="gallery-desc">高清壁纸·1080P</p>
+                </div> -->
+            </div>
+
+            <!-- 人物分组2：于舟（帮我拍拍） -->
+            <h3 style="font-size: 1.1rem; color: #9c7858; margin: 2rem 0 1rem; font-weight: 500;">✨ 于舟（帮我拍拍）</h3>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://raw.githubusercontent.com/2875871191/qixiaohuangshu-fanpage/refs/heads/main/images_gallery/20260217204055_96_138.jpg" alt="于舟-官方人设图">
+                    <p class="gallery-desc"></p>
+                    <!-- <p class="gallery-desc">官方人设图</p> -->
+                </div>
+                <!-- <div class="gallery-item">
+                    <img src="宋十九图片2链接" alt="于舟-同人插画">
+                    <p class="gallery-desc"></p>
+                </div> -->
+            </div>
+
+            <!-- 可继续添加其他人物分组：向挽（晚潮）、晁新（晚潮）等 -->
+        </section>
+
+        <!-- 关于她 -->
+        <section class="section" id="about">
+            <h2 class="section-title">关于她 · 写故事的人</h2>
+            <p>笔名：七小皇叔</p>
+            <p>其他ID：乎肥棠瘦，路西西，lcc，一个路人</p>
+            <!-- <p>风格：温柔、细腻、有力量，擅长刻画女性之间的细腻情感</p> -->
+            <p style="margin: 1rem 0;">✨ 作者平台（防走失）：</p>
+            <p><a href="https://m.gongzicp.com/zone/author-31392.html">长佩文学城</a> | <a href="https://weibo.com/u/6992385346">微博@乎肥棠瘦</a> | <a href="https://space.bilibili.com/20824925?spm_id_from=333.337.0.0">B站</a></p>
+        </section>
+
+        <!-- 留言墙 -->
+        <!-- <section class="section" id="messages">
+            <h2 class="section-title">留言墙 · 温柔树洞</h2>
+            <div class="message-list">
+                <div class="message-item">
+                    <div class="message-author">—— 读者 小软</div>
+                    <div class="message-content">《问棺》真的太好哭了，谢谢太太写出这么好的故事！</div>
+                </div>
+                <div class="message-item">
+                    <div class="message-author">—— 读者 阿晚</div>
+                    <div class="message-content">喜欢李十一和宋十九的感情，温柔又坚定，被治愈了～</div>
+                </div>
+            </div>
+            <div class="message-form">
+                <textarea rows="5" placeholder="写下你想对太太说的温柔话吧～（只留温柔，不吵架、不催更）"></textarea>
+                <button>发送小纸条</button>
+            </div>
+        </section> -->
+
+        <!-- 小星星 -->
+        <section class="section" id="stars">
+            <h2 class="section-title">小星星 · 粉丝小角落</h2>
+            <p>这里是读者的温柔产出区，所有美好都值得被记录</p>
+            <br>
+            <!-- 粉丝产出列表（新增链接） -->
+            <div class="stars-list">
+                <!-- <div class="stars-item">
+                    <span>✍️ 读者同人：</span>
+                    <a href="问棺同人小甜文链接" class="stars-link">《问棺》短篇小甜文</a>
+                </div> -->
+                <div class="stars-item" style="margin-top: 0.8rem;">
+                    <span>🎬 读者剪辑：</span>
+                    <a href="https://www.bilibili.com/video/BV1cN41157ba/?spm_id_from=333.337.search-card.all.click&vd_source=403a336a22f7f04ee60a17c2cd3b2a64" class="stars-link">【含字幕】百合学课题精讲——《帮我拍拍》</a>
+                </div>
+                <!-- 可继续新增更多剪辑/产出 -->
+                <!-- <div class="stars-item" style="margin-top: 0.8rem;">
+                    <span>🎬 读者剪辑：</span>
+                    <a href="神龛剪辑链接" class="stars-link">《神龛》名场面混剪</a>
+                </div>
+                <div class="stars-item" style="margin-top: 0.8rem;">
+                    <span>🎬 读者剪辑：</span>
+                    <a href="飘飘剪辑链接" class="stars-link">《飘飘》温柔日常剪辑</a>
+                </div> -->
+            </div>
+            <!-- 汇总链接 -->
+            <!-- <div style="margin-top: 1.5rem;">
+                <a href="所有粉丝产出汇总链接" class="stars-more">查看更多粉丝产出 →</a>
+            </div> -->
+        </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-text">故事会结束，但爱不会。</div>
+        <div class="footer-text">希望你，真的很快乐。</div>
+        <div class="copyright">© 2025 七小皇叔读者小世界 - 仅作粉丝交流，无盈利行为 | 支持正版，拒绝盗文</div>
+    </footer>
+
+    <!-- 移动端菜单JS -->
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+
+        // 点击导航链接关闭菜单（移动端）
+        const links = document.querySelectorAll('.nav-links a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
